@@ -1,0 +1,130 @@
+﻿<UserControl x:Class="Egate_Printers_Page_Computation.Templates.invoice_comparison_side"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Egate_Printers_Page_Computation.Templates"
+             xmlns:me="clr-namespace:Egate_Printers_Page_Computation"
+             xmlns:helpers="clr-namespace:Egate_Printers_Page_Computation.Helpers"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:linq="clr-namespace:System.Linq;assembly=System.Core"
+             xmlns:customs="clr-namespace:CustomControls;assembly=CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="MonthsData" MethodName="Range" ObjectType="{x:Type linq:Enumerable}">
+            <ObjectDataProvider.MethodParameters>
+                <system:Int32>1</system:Int32>
+                <system:Int32>12</system:Int32>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="YearsData" MethodName="Range" ObjectType="{x:Type linq:Enumerable}">
+            <ObjectDataProvider.MethodParameters>
+                <system:Int32>1990</system:Int32>
+                <system:Int32>100</system:Int32>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <!-- filters invoice -->
+            <GroupBox x:Name="filtersInvoiceGroup" Header="Filter Invoice" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical" Margin="{StaticResource Filters.GroupBox.Margin}">
+                    <StackPanel Orientation="Horizontal" Margin="{StaticResource Filters.Vertical.Margin}">
+                        <customs:LabelContainer Header="Month" Placement="left" Margin="{StaticResource Filters.Fields.Margin}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                                <ComboBox ItemsSource="{Binding Source={StaticResource YearsData}}" SelectedItem="{Binding FilterInvoiceYear,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="80"/>
+                                <ComboBox ItemsSource="{Binding Source={StaticResource MonthsData}}" SelectedItem="{Binding FilterInvoiceMonth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="120">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource MonthNameConverter}}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </StackPanel>
+                        </customs:LabelContainer>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <!-- export missing -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="30,10,0,0">
+                <Button Content="Export Invoice" Click="ExportInvoice_Click" Foreground="Purple" BorderBrush="Purple"/>
+                <TextBlock Style="{StaticResource QuestionTextboxStyle}"  ToolTip="{StaticResource InvoiceComparisonExportTooltip}" Margin="5,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- totals invoice -->
+        <StackPanel x:Name="totalsInvoiceGroup" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,0,8">
+            <TextBlock>
+                <Run Foreground="Gray">Company:</Run>
+                <Run Text="{Binding TotalInvoiceCompanyCount}" FontWeight="Bold" Foreground="Red"/>
+            </TextBlock>
+            <TextBlock Margin="30,0,0,0">
+                <Run Foreground="Gray">Invoice:</Run>
+                <Run Text="{Binding TotalInvoiceCount}" FontWeight="Bold" Foreground="Red"/>
+            </TextBlock>
+            <TextBlock Margin="30,0,0,0">
+                <Run Foreground="Gray">Amount:</Run>
+                <Run Text="{Binding TotalInvoiceAmount,StringFormat=N2}" FontWeight="Bold" Foreground="Red"/>
+            </TextBlock>
+            <TextBlock Margin="30,0,0,0">
+                <Run Foreground="Gray">For the month of:</Run>
+                <Run Text="{Binding InvoiceMonthOf,Converter={StaticResource MonthNameConverter}}" FontWeight="Bold" Foreground="Red"/>
+            </TextBlock>
+        </StackPanel>
+
+
+        <!-- invoice list -->
+        <GroupBox Header="Invoice List" Grid.Row="1">
+            <DataGrid x:Name="invoiceDataGrid" Margin="0,3,0,0" IsReadOnly="False" CanUserSortColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Company.CompanyName}" Width="220" IsReadOnly="True">
+                        <DataGridTextColumn.Header>
+                            <TextBlock ToolTip="{StaticResource InvoiceComparisonCompanyNameTooltip}" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="999999">
+                                Company <Run Style="{StaticResource QuestionRunStyle}"/>
+                            </TextBlock>
+                        </DataGridTextColumn.Header>
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Left}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ComparisonMark}" Value="True">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNumber}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Amount" Binding="{Binding Amount,Converter={StaticResource CurrencyNoCurrencyDisplayConverter}}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" Width="70" Foreground="DarkGreen" IsReadOnly="True"/>
+                    <DataGridTemplateColumn Header="File" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="{StaticResource DataGridTextCell.Margin}">
+                                    <!-- open file -->
+                                    <Button Style="{StaticResource BorderlessButton}" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-file}" Foreground="#f6b40f" ToolTip="{Binding FileAttachment}" Click="OpenFile_Click" Margin="3,0,3,0"
+                                            VerticalAlignment="Center" Visibility="{Binding FileAttachment,Converter={StaticResource StringToVisibilityConverter}}"
+                                            me:FileExtension.FileName="{Binding FileAttachment}" me:FileExtension.Directory="{x:Static helpers:CollectionScheduleHelper.FILE_INVOICE_DIRECTORY}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Width="120" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Bill Notes" Binding="{Binding ComparisonNotes}" Width="*" IsReadOnly="False">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Left}">
+                                <Setter Property="ToolTip" Value="Double-click to edit"/>
+                                <Setter Property="Cursor" Value="IBeam"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+    </Grid>
+</UserControl>

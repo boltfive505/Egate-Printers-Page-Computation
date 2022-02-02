@@ -1,0 +1,209 @@
+﻿<UserControl x:Class="Egate_Printers_Page_Computation.SubModals.counter_add_modal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Egate_Printers_Page_Computation.SubModals"
+             xmlns:customs="clr-namespace:CustomControls;assembly=CustomControls"
+             xmlns:templates="clr-namespace:Egate_Printers_Page_Computation.Templates"
+             xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type templates:BorderedContent}" BasedOn="{StaticResource {x:Type templates:BorderedContent}}">
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="White">
+        <StackPanel Orientation="Vertical" Margin="{StaticResource SubModal.Group.Margin}">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Company" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <TextBox Text="{Binding Contract.Company.CompanyName}" Style="{StaticResource DisabledTextbox}" Width="200"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="Contract #" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <TextBox Text="{Binding Contract.ContractNumber}" Style="{StaticResource DisabledTextbox}" Width="200"/>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Margin="{StaticResource SubModal.Fields.Margin}">
+                    <customs:LabelContainer.Style>
+                        <Style TargetType="{x:Type customs:LabelContainer}">
+                            <Setter Property="Header" Value="Unit Name"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsNew}" Value="True"/>
+                                        <Condition Binding="{Binding IsReplaced}" Value="True"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Header" Value="Unit Name ( Old Unit )"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </customs:LabelContainer.Style>
+                    <TextBox x:Name="OldUnitNameValue" Text="{Binding UnitName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="180"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Margin="{StaticResource SubModal.Fields.Margin}">
+                    <customs:LabelContainer.Style>
+                        <Style TargetType="{x:Type customs:LabelContainer}">
+                            <Setter Property="Header" Value="Serial #"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsNew}" Value="True"/>
+                                        <Condition Binding="{Binding IsReplaced}" Value="True"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Header" Value="Serial # ( Old Unit )"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </customs:LabelContainer.Style>
+                    <TextBox x:Name="OldSerialNumberValue" Text="{Binding UnitSerialNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="180"/>
+                </customs:LabelContainer>
+                <CheckBox Content="For Replacement" IsChecked="{Binding IsReplaced,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="{StaticResource SubModal.Fields.Margin}" VerticalAlignment="Bottom">
+                    <CheckBox.Style>
+                        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource RightCheckBox}">
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Setter Property="Foreground" Value="Gray"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsNew}" Value="True">
+                                    <Setter Property="IsHitTestVisible" Value="True"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </CheckBox.Style>
+                </CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Margin="{StaticResource SubModal.Fields.Margin}">
+                    <customs:LabelContainer.Style>
+                        <Style TargetType="{x:Type customs:LabelContainer}">
+                            <Setter Property="Header" Value="Page Count File"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsNew}" Value="True"/>
+                                        <Condition Binding="{Binding IsReplaced}" Value="True"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Header" Value="Page Count File ( Old Unit )"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </customs:LabelContainer.Style>
+                    <StackPanel Orientation="Horizontal">
+                        <customs:FileAttachment Name="OldFileValue" FileName="{Binding FileAttachment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="300"/>
+                        <Button Style="{StaticResource LinkButton}" Content="Open Camera" Click="OpenCamera_Click" Tag="{Binding ElementName=OldFileValue}" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </customs:LabelContainer>
+            </StackPanel>
+            <Grid Margin="{StaticResource Filters.Fields.Margin}" Width="500" HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <templates:BorderedContent Grid.ColumnSpan="5" FontWeight="Bold" Background="WhiteSmoke">
+                    <templates:BorderedContent.Style>
+                        <Style TargetType="{x:Type templates:BorderedContent}" BasedOn="{StaticResource {x:Type templates:BorderedContent}}">
+                            <Setter Property="Content" Value="Page Count"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsNew}" Value="True"/>
+                                        <Condition Binding="{Binding IsReplaced}" Value="True"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Content" Value="Page Count ( Old Unit )"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </templates:BorderedContent.Style>
+                </templates:BorderedContent>
+                <templates:BorderedContent Grid.Row="1" Grid.RowSpan="2" Content="Date" VerticalContentAlignment="Bottom"/>
+                <templates:BorderedContent Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Black"/>
+                <templates:BorderedContent Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Content="Colored"/>
+                <templates:BorderedContent Grid.Row="2" Grid.Column="1" Content="A4"/>
+                <templates:BorderedContent Grid.Row="2" Grid.Column="2" Content="A3"/>
+                <templates:BorderedContent Grid.Row="2" Grid.Column="3" Content="A4"/>
+                <templates:BorderedContent Grid.Row="2" Grid.Column="4" Content="A3"/>
+                <xceed:DateTimePicker x:Name="CounterDateValue" Grid.Row="3" Value="{Binding Date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" ValueChanged="CounterDate_ValueChanged"/>
+                <xceed:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding PageCount_Black_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
+                <xceed:IntegerUpDown Grid.Row="3" Grid.Column="2" Value="{Binding PageCount_Black_A3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
+                <xceed:IntegerUpDown Grid.Row="3" Grid.Column="3" Value="{Binding PageCount_Colored_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
+                <xceed:IntegerUpDown Grid.Row="3" Grid.Column="4" Value="{Binding PageCount_Colored_A3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
+            </Grid>
+            <Grid Margin="0,20,0,0">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Visibility" Value="Hidden"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsNew}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsNew}" Value="True"/>
+                                    <Condition Binding="{Binding IsReplaced}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <StackPanel Orientation="Vertical" DataContext="{Binding Path=NewUnitCounter,RelativeSource={RelativeSource AncestorType={x:Type local:counter_add_modal}}}">
+                    <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                        <customs:LabelContainer Header="Unit Name ( New Unit )" Margin="{StaticResource SubModal.Fields.Margin}">
+                            <TextBox Text="{Binding UnitName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="180"/>
+                        </customs:LabelContainer>
+                        <customs:LabelContainer Header="Serial # ( New Unit )" Margin="{StaticResource SubModal.Fields.Margin}">
+                            <TextBox Text="{Binding UnitSerialNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="180"/>
+                        </customs:LabelContainer>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                        <customs:LabelContainer Header="Page Count File ( New Unit )" Margin="{StaticResource SubModal.Fields.Margin}">
+                            <StackPanel Orientation="Horizontal">
+                                <customs:FileAttachment x:Name="NewFileValue" FileName="{Binding FileAttachment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="300"/>
+                                <Button Style="{StaticResource LinkButton}" Content="Open Camera" Click="OpenCamera_Click" Tag="{Binding ElementName=NewFileValue}" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </customs:LabelContainer>
+                    </StackPanel>
+                    <Grid Margin="{StaticResource Filters.Fields.Margin}" Width="500" HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <templates:BorderedContent Grid.ColumnSpan="5" Content="Page Count ( New Unit )" FontWeight="Bold"/>
+                        <templates:BorderedContent Grid.Row="1" Grid.RowSpan="3"/>
+                        <templates:BorderedContent Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Black"/>
+                        <templates:BorderedContent Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Content="Colored"/>
+                        <templates:BorderedContent Grid.Row="2" Grid.Column="1" Content="A4"/>
+                        <templates:BorderedContent Grid.Row="2" Grid.Column="2" Content="A3"/>
+                        <templates:BorderedContent Grid.Row="2" Grid.Column="3" Content="A4"/>
+                        <templates:BorderedContent Grid.Row="2" Grid.Column="4" Content="A3"/>
+                        <xceed:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding PageCount_Black_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
+                        <xceed:IntegerUpDown Grid.Row="3" Grid.Column="2" Value="{Binding PageCount_Black_A3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
+                        <xceed:IntegerUpDown Grid.Row="3" Grid.Column="3" Value="{Binding PageCount_Colored_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
+                        <xceed:IntegerUpDown Grid.Row="3" Grid.Column="4" Value="{Binding PageCount_Colored_A3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

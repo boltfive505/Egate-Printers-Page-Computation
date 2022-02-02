@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="Egate_Printers_Page_Computation.SubModals.CollectionSchedule.bank_add_modal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Egate_Printers_Page_Computation.SubModals.CollectionSchedule"
+             xmlns:customs="clr-namespace:CustomControls;assembly=CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="White">
+        <StackPanel Orientation="Vertical" Margin="{StaticResource SubModal.Group.Margin}">
+            <customs:LabelContainer Header="Bank Name" Margin="{StaticResource SubModal.Fields.Margin}">
+                <TextBox Text="{Binding BankName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left"/>
+            </customs:LabelContainer>
+        </StackPanel>
+    </Grid>
+</UserControl>

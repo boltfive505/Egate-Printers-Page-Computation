@@ -1,0 +1,52 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Egate_Printers_Page_Computation.Converters"
+                    xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit">
+    <local:IsNegativeConverter x:Key="IsNegativeConverter"/>
+    <local:CurrencyDisplayConverter x:Key="CurrencyDisplayConverter"/>
+    <local:CurrencyDisplayConverter x:Key="CurrencyNoCurrencyDisplayConverter" DisplayCurrency="False"/>
+    <local:CurrencyDisplayConverter x:Key="CurrencyAllowZeroDisplayConverter" DisplayIfZero="True"/>
+    <local:CurrencyDisplayConverter x:Key="NumberDisplayConverter" DisplayCurrency="False" FormatString="N0"/>
+    <local:MonthNameConverter x:Key="MonthNameConverter"/>
+    <local:HtmlToPlainTextConverter x:Key="HtmlToPlainTextConverter"/>
+    <local:TextNoWrapConverter x:Key="TextNoWrapConverter"/>
+    <local:StringEmptyConverter x:Key="StringEmptyConverter"/>
+    <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+    <local:StringListJoinConverter x:Key="StringListJoinConverter"/>
+    <!-- style selectors converter -->
+    <local:StyleSelectorConverter x:Key="TextBoxStyleSelectorConverter">
+        <local:StyleSelectorConverter.TrueStyle>
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DisabledTextbox}"/>
+        </local:StyleSelectorConverter.TrueStyle>
+        <local:StyleSelectorConverter.FalseStyle>
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}"/>
+        </local:StyleSelectorConverter.FalseStyle>
+    </local:StyleSelectorConverter>
+    
+    <local:StyleSelectorConverter x:Key="ComboBoxStyleSelectorConverter">
+        <local:StyleSelectorConverter.TrueStyle>
+            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DisabledComboBox}"/>
+        </local:StyleSelectorConverter.TrueStyle>
+        <local:StyleSelectorConverter.FalseStyle>
+            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}"/>
+        </local:StyleSelectorConverter.FalseStyle>
+    </local:StyleSelectorConverter>
+    
+    <local:StyleSelectorConverter x:Key="DateTimePickerStyleSelectorConverter">
+        <local:StyleSelectorConverter.TrueStyle>
+            <Style TargetType="{x:Type xceed:DateTimePicker}" BasedOn="{StaticResource DisabledDateTimePicker}"/>
+        </local:StyleSelectorConverter.TrueStyle>
+        <local:StyleSelectorConverter.FalseStyle>
+            <Style TargetType="{x:Type xceed:DateTimePicker}" BasedOn="{StaticResource {x:Type xceed:DateTimePicker}}"/>
+        </local:StyleSelectorConverter.FalseStyle>
+    </local:StyleSelectorConverter>
+
+    <local:StyleSelectorConverter x:Key="DecimalUpDownStyleSelectorConverter">
+        <local:StyleSelectorConverter.TrueStyle>
+            <Style TargetType="{x:Type xceed:DecimalUpDown}" BasedOn="{StaticResource DisabledDecimalUpDown}"/>
+        </local:StyleSelectorConverter.TrueStyle>
+        <local:StyleSelectorConverter.FalseStyle>
+            <Style TargetType="{x:Type xceed:DecimalUpDown}" BasedOn="{StaticResource {x:Type xceed:DecimalUpDown}}"/>
+        </local:StyleSelectorConverter.FalseStyle>
+    </local:StyleSelectorConverter>
+</ResourceDictionary>

@@ -1,0 +1,126 @@
+﻿<UserControl x:Class="Egate_Printers_Page_Computation.SubModals.contract_add_modal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Egate_Printers_Page_Computation.SubModals"
+             xmlns:me="clr-namespace:Egate_Printers_Page_Computation"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:customs="clr-namespace:CustomControls;assembly=CustomControls"
+             xmlns:templates="clr-namespace:Egate_Printers_Page_Computation.Templates"
+             xmlns:html="clr-namespace:CustomHtmlCefEditor.Wpf;assembly=CustomHtmlCefEditor.Wpf"
+             xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="AssetTypeData" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="me:AssetType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <Style TargetType="{x:Type templates:BorderedContent}" BasedOn="{StaticResource {x:Type templates:BorderedContent}}">
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        <Style x:Key="ChargeIntegerDisplay" TargetType="{x:Type xceed:IntegerUpDown}" BasedOn="{StaticResource {x:Type xceed:IntegerUpDown}}">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+        <Style x:Key="ChargeDecimalDisplay" TargetType="{x:Type xceed:DecimalUpDown}" BasedOn="{StaticResource {x:Type xceed:DecimalUpDown}}">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FormatString" Value="₱{0:N2}"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="White">
+        <StackPanel Orientation="Vertical" Margin="{StaticResource SubModal.Group.Margin}">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Company" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <ComboBox x:Name="CompanyValue" Width="200" DisplayMemberPath="CompanyName" SelectedItem="{Binding Company,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="Contract #" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <TextBox x:Name="ContractNumberValue" Text="{Binding ContractNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="Department" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <TextBox Text="{Binding Department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Contract Ends" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <xceed:DateTimePicker Value="{Binding ExpirationDate,UpdateSourceTrigger=PropertyChanged}" Width="110"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="Asset Model" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <TextBox Text="{Binding AssetModel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="230"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="Asset Type" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <ComboBox SelectedItem="{Binding AssetType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="150" ItemsSource="{Binding Source={StaticResource AssetTypeData}}"/>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Fields.Margin}">
+                <!-- basic charges -->
+                <Grid Width="450" Margin="0,0,30,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <templates:BorderedContent Grid.ColumnSpan="5" Content="Basic Charges (Free Print Pages)" FontWeight="Bold" Background="WhiteSmoke"/>
+                    <templates:BorderedContent Grid.Row="1" Grid.ColumnSpan="2" Content="Black" />
+                    <templates:BorderedContent Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Content="Colored" />
+                    <templates:BorderedContent Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Content="Basic Charge" VerticalContentAlignment="Bottom" />
+                    <templates:BorderedContent Grid.Row="2" Grid.Column="0" Content="A4"/>
+                    <templates:BorderedContent Grid.Row="2" Grid.Column="1" Content="A3"/>
+                    <templates:BorderedContent Grid.Row="2" Grid.Column="2" Content="A4"/>
+                    <templates:BorderedContent Grid.Row="2" Grid.Column="3" Content="A3"/>
+                    <xceed:IntegerUpDown Grid.Row="3" Grid.Column="0" Value="{Binding PageLimit_Black_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeIntegerDisplay}"/>
+                    <xceed:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding PageLimit_Black_A3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeIntegerDisplay}"/>
+                    <xceed:IntegerUpDown Grid.Row="3" Grid.Column="2" Value="{Binding PageLimit_Colored_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeIntegerDisplay}"/>
+                    <xceed:IntegerUpDown Grid.Row="3" Grid.Column="3" Value="{Binding PageLimit_Colored_A3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeIntegerDisplay}"/>
+                    <xceed:DecimalUpDown Grid.Row="3" Grid.Column="4" Value="{Binding BasicPrice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeDecimalDisplay}"/>
+                </Grid>
+                <!-- end basic charges -->
+                <!-- excess charges -->
+                <Grid Width="450">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <templates:BorderedContent Grid.ColumnSpan="5" Content="Excess Charges" FontWeight="Bold" Background="WhiteSmoke"/>
+                    <templates:BorderedContent Grid.Row="1" Grid.RowSpan="3" Content="Charge / Page" VerticalContentAlignment="Bottom"/>
+                    <templates:BorderedContent Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Black"/>
+                    <templates:BorderedContent Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Content="Colored"/>
+                    <templates:BorderedContent Grid.Row="2" Grid.Column="1" Content="A4"/>
+                    <templates:BorderedContent Grid.Row="2" Grid.Column="2" Content="A3"/>
+                    <templates:BorderedContent Grid.Row="2" Grid.Column="3" Content="A4"/>
+                    <templates:BorderedContent Grid.Row="2" Grid.Column="4" Content="A3"/>
+                    <xceed:DecimalUpDown Grid.Row="3" Grid.Column="1" Value="{Binding ExcessPrice_Black_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeDecimalDisplay}"/>
+                    <xceed:DecimalUpDown Grid.Row="3" Grid.Column="2" Value="{Binding ExcessPrice_Black_A3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeDecimalDisplay}"/>
+                    <xceed:DecimalUpDown Grid.Row="3" Grid.Column="3" Value="{Binding ExcessPrice_Colored_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeDecimalDisplay}"/>
+                    <xceed:DecimalUpDown Grid.Row="3" Grid.Column="4" Value="{Binding ExcessPrice_Colored_A3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeDecimalDisplay}"/>
+                </Grid>
+                <!-- end excess charges -->
+            </StackPanel>
+            <customs:LabelContainer Header="Notes" Margin="{StaticResource SubModal.Fields.Margin}">
+                <html:HtmlEditor HtmlContent="{Binding Description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Height="150"/>
+            </customs:LabelContainer>
+        </StackPanel>
+    </Grid>
+</UserControl>

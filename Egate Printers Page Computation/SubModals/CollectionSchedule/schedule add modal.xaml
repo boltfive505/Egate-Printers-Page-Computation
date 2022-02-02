@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="Egate_Printers_Page_Computation.SubModals.CollectionSchedule.schedule_add_modal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Egate_Printers_Page_Computation.SubModals.CollectionSchedule"
+             xmlns:me="clr-namespace:Egate_Printers_Page_Computation"
+             xmlns:customs="clr-namespace:CustomControls;assembly=CustomControls"
+             xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
+    <Grid Background="White">
+        <StackPanel Orientation="Vertical" Margin="{StaticResource SubModal.Group.Margin}">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Company" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <TextBox Text="{Binding Company.CompanyName,Mode=OneWay}" Style="{StaticResource DisabledTextbox}" Width="200"/>
+                </customs:LabelContainer>
+                <CheckBox Content="Not Scheduled" IsChecked="{Binding NotScheduled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource RightCheckBox}" Margin="{StaticResource SubModal.Fields.Margin}" VerticalAlignment="Bottom"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Schedule" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <xceed:DateTimePicker Value="{Binding ScheduleDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100">
+                        <xceed:DateTimePicker.Style>
+                            <Style TargetType="{x:Type xceed:DateTimePicker}" BasedOn="{StaticResource {x:Type xceed:DateTimePicker}}">
+                                <Setter Property="IsReadOnly" Value="False"/>
+                                <Setter Property="Background" Value="White"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding NotScheduled}" Value="True">
+                                        <Setter Property="IsReadOnly" Value="True"/>
+                                        <Setter Property="Background" Value="Gainsboro"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </xceed:DateTimePicker.Style>
+                    </xceed:DateTimePicker>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="Updated by" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <ComboBox x:Name="UpdatedByEmployeeValue" SelectedItem="{Binding UpdateByEmployee,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              DisplayMemberPath="EmployeeName" Width="180"/>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Collection Policy for this Company" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <TextBox Text="{Binding Company.ScheduleNotes,Mode=OneWay}" Style="{StaticResource DisabledTextbox}" Width="400" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible"/>
+                </customs:LabelContainer>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource SubModal.Verticals.Margin}">
+                <customs:LabelContainer Header="Notes" Margin="{StaticResource SubModal.Fields.Margin}">
+                    <Grid Width="400">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <ComboBox ItemsSource="{Binding Source={StaticResource ScheduleNotesTypeData}}" SelectedItem="{Binding ScheduleNotesType,UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Grid.Row="1" Text="{Binding ScheduleNotes,UpdateSourceTrigger=PropertyChanged}" Height="60" Margin="0,5,0,0" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible">
+                            <TextBox.Style>
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ScheduleNotesType}" Value="{x:Static me:ScheduleNotesType.Others}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                    </Grid>
+
+                </customs:LabelContainer>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

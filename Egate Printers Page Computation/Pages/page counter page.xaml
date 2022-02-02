@@ -1,0 +1,459 @@
+﻿<Page x:Class="Egate_Printers_Page_Computation.Pages.page_counter_page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Egate_Printers_Page_Computation.Pages"
+      xmlns:system="clr-namespace:System;assembly=mscorlib"
+      xmlns:linq="clr-namespace:System.Linq;assembly=System.Core"
+      xmlns:converters="clr-namespace:Egate_Printers_Page_Computation.Converters"
+      xmlns:customs="clr-namespace:CustomControls;assembly=CustomControls"
+      xmlns:templates="clr-namespace:Egate_Printers_Page_Computation.Templates"
+      xmlns:html="clr-namespace:CustomHtmlCefEditor.Wpf;assembly=CustomHtmlCefEditor.Wpf"
+      xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+      mc:Ignorable="d" 
+      d:DesignHeight="450"
+      Title="main_page" Loaded="Page_Loaded">
+    <Page.Resources>
+        <Style x:Key="PageDifferenceColumn" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Right}">
+            <Setter Property="Foreground" Value="DarkGreen"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=DataContext,RelativeSource={RelativeSource AncestorType={x:Type DataGridCell}},Converter={StaticResource IsNegativeConverter}}" Value="True">
+                    <Setter Property="Foreground" Value="Red"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <converters:ColorConditionConverter x:Key="IsReplacedColor" TrueValue="Gray" FalseValue="Black"/>
+        <ObjectDataProvider x:Key="MonthsData" MethodName="Range" ObjectType="{x:Type linq:Enumerable}">
+            <ObjectDataProvider.MethodParameters>
+                <system:Int32>1</system:Int32>
+                <system:Int32>12</system:Int32>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="YearsData" MethodName="Range" ObjectType="{x:Type linq:Enumerable}">
+            <ObjectDataProvider.MethodParameters>
+                <system:Int32>1990</system:Int32>
+                <system:Int32>100</system:Int32>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Page.Resources>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="95"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="950"/>
+        </Grid.ColumnDefinitions>
+        <!-- filters -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <GroupBox x:Name="filtersGroup" Header="Filters" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal" Margin="{StaticResource Filters.GroupBox.Margin}">
+                    <customs:LabelContainer Header="Company" Placement="Left" Margin="{StaticResource Filters.Fields.Margin}">
+                        <TextBox Text="{Binding FilterCompanyName,UpdateSourceTrigger=PropertyChanged}" Width="150"/>
+                    </customs:LabelContainer>
+                    <customs:LabelContainer Header="Contract #" Placement="Left" Margin="{StaticResource Filters.Fields.Margin}">
+                        <TextBox Text="{Binding FilterContractNumber,UpdateSourceTrigger=PropertyChanged}" Width="150"/>
+                    </customs:LabelContainer>
+                    <Button Content="Reset" Click="ResetFilter_btn_Click" Margin="{StaticResource Filters.Fields.Margin}"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox x:Name="selectInvoiceGroup" Header="Select Invoice" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,0,0,0">
+                <StackPanel Orientation="Horizontal" Margin="{StaticResource Filters.GroupBox.Margin}">
+                    <customs:LabelContainer Header="Company" Placement="Left" Margin="{StaticResource Filters.Fields.Margin}">
+                        <customs:SearchableComboBox ItemsSource="{Binding CompanyView}" SelectedItem="{Binding SelectCompany,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="CompanyName" SearchText="InvoiceCompany_SearchText" Width="180"/>
+                    </customs:LabelContainer>
+                    <customs:LabelContainer Header="For the Month of" Placement="Left" Margin="{StaticResource Filters.Fields.Margin}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                            <ComboBox ItemsSource="{Binding Source={StaticResource MonthsData}}" SelectedItem="{Binding ConsumptionMonth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="120">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource MonthNameConverter}}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource YearsData}}" SelectedItem="{Binding ConsumptionYear,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="90"/>
+                        </StackPanel>
+                    </customs:LabelContainer>
+                    <Button Content="Show Invoice" Click="SelectInvoice_Click" Margin="{StaticResource Filters.Fields.Margin}"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+        <!-- buttons -->
+        <Grid Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom" Margin="0,0,0,8">
+            <Button Content="Add Company" Click="AddCompany_btn_Click" HorizontalAlignment="Left"/>
+            <Grid x:Name="otherFiltersGroup" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <CheckBox Content="Show InActive" IsChecked="{Binding ShowInactiveCompany,UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+        </Grid>
+
+        <!-- company list -->
+        <GroupBox Header="Company List" Grid.Column="0" Grid.Row="1">
+            <DataGrid x:Name="companyDataGrid" GridLinesVisibility="Horizontal" SelectionChanged="companyDataGrid_SelectionChanged" Margin="0,3,0,0">
+                <DataGrid.CellStyle>
+                    <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCell.Style.Default}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsActive}" Value="False">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn CellStyle="{StaticResource DataGridCell.Style.ShowOnHover}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Button Style="{StaticResource BorderlessButton}" Click="EditCompany_btn_Click" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-edit}" Margin="3,0,3,0" Foreground="Navy" ToolTip="Edit Contract"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Name" Binding="{Binding CompanyName}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Width="*"/>
+                    <DataGridTextColumn Header="" Binding="{Binding ContractCount}" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Center}">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn CellStyle="{StaticResource DataGridCell.Style.ShowOnHover}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Button Style="{StaticResource BorderlessButton}" Click="AddContract_btn_Click" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-plus}" Margin="3,0,3,0" Foreground="DarkGreen" ToolTip="Add Contract"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+        
+        <!-- contract list -->
+        <GroupBox Header="Contract List" Grid.Column="1" Grid.Row="1" Margin="10,0,10,0">
+            <Grid Margin="0,3,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <DataGrid x:Name="contractDataGrid" SelectionChanged="contractDataGrid_SelectionChanged" CanUserSortColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn CellStyle="{StaticResource DataGridCell.Style.ShowOnHover}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource BorderlessButton}" Click="EditContract_btn_Click" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-edit}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Navy" ToolTip="Edit Contract"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Contract #" Binding="{Binding ContractNumber}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Width="130"/>
+                        <DataGridTemplateColumn CellStyle="{StaticResource DataGridCell.Style.ShowOnHover}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Button Style="{StaticResource BorderlessButton}" Click="AddCounter_btn_Click" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-plus}" Foreground="DarkBlue" ToolTip="Add Counter"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Department" Binding="{Binding Department}" Width="120" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}"/>
+                        <DataGridTextColumn Header="Contract Ends" Binding="{Binding ExpirationDate,StringFormat={}{0:MM/dd/yyyy}}" Width="100" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}"/>
+                        <DataGridTextColumn Header="Asset Model" Binding="{Binding AssetModel}" Width="150" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}"/>
+                        <DataGridTextColumn Header="Asset Type" Binding="{Binding AssetType}" Width="120" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <!-- display contract charges -->
+                <templates:contract_charge_info Grid.Row="1" Margin="0,10,0,0" DataContext="{Binding ElementName=contractDataGrid,Path=SelectedItem}"/>
+                <!-- display contract notes -->
+                <GroupBox Grid.Row="2" Margin="0,10,0,0">
+                    <GroupBox.Header>
+                        <TextBlock  Text="Contract Notes" FontWeight="Bold"/>
+                    </GroupBox.Header>
+                    <html:HtmlPreview HtmlContent="{Binding ElementName=contractDataGrid,Path=SelectedItem.Description}" Height="150" BorderThickness="0"/>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
+        
+        <!-- counter list -->
+        <GroupBox Header="Counter History" Grid.Column="2" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <DataGrid x:Name="counterDataGrid" Margin="0,3,0,0">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn CellStyle="{StaticResource DataGridCell.Style.ShowOnHover}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource BorderlessButton}" Click="EditCounter_btn_Click" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-edit}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Navy" ToolTip="Edit Page Count"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Date" Binding="{Binding Date,StringFormat={}{0:MM/dd/yyyy}}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" Width="80">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Right}">
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsReplaced}" Value="True">
+                                            <Setter Property="Foreground" Value="Silver"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Unit Name" Binding="{Binding UnitName}" Width="100">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Left}">
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsReplaced}" Value="True">
+                                            <Setter Property="Foreground" Value="Silver"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Serial #" Binding="{Binding UnitSerialNumber}" Width="100">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Left}">
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsReplaced}" Value="True">
+                                            <Setter Property="Foreground" Value="Silver"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridCheckBoxColumn Header="Replaced" Binding="{Binding IsReplaced}" ElementStyle="{StaticResource DataGridCheckBoxColumn.ElementStyle}"/>
+                        <DataGridTextColumn Header="Black A4" Binding="{Binding PageCount_Black_A4,StringFormat={}{0:N0}}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" Width="*"/>
+                        <DataGridTextColumn Header="[Diff]" Binding="{Binding PageCountDifference_Black_A4,StringFormat={}{0:N0}}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource PageDifferenceColumn}" Width="*"/>
+                        <DataGridTextColumn Header="Black A3" Binding="{Binding PageCount_Black_A3,StringFormat={}{0:N0}}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" Width="*"/>
+                        <DataGridTextColumn Header="[Diff]" Binding="{Binding PageCountDifference_Black_A3,StringFormat={}{0:N0}}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource PageDifferenceColumn}" Width="*"/>
+                        <DataGridTextColumn Header="Colored A4" Binding="{Binding PageCount_Colored_A4,StringFormat={}{0:N0}}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" Width="*"/>
+                        <DataGridTextColumn Header="[Diff]" Binding="{Binding PageCountDifference_Colored_A4,StringFormat={}{0:N0}}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource PageDifferenceColumn}" Width="*"/>
+                        <DataGridTextColumn Header="Colored A3" Binding="{Binding PageCount_Colored_A3,StringFormat={}{0:N0}}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" Width="*"/>
+                        <DataGridTextColumn Header="[Diff]" Binding="{Binding PageCountDifference_Colored_A3,StringFormat={}{0:N0}}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource PageDifferenceColumn}" Width="*"/>
+                        <DataGridTemplateColumn Header="File" Width="35" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Grid.Style>
+                                            <Style TargetType="{x:Type Grid}">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding FileAttachment}" Value="">
+                                                        <Setter Property="Visibility" Value="Hidden"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding FileAttachment}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Hidden"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
+                                        <Button Style="{StaticResource BorderlessButton}" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-file}" Foreground="#f6b40f" ToolTip="{Binding FileAttachment}" Click="OpenPageCountFile_btn_Click"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <!-- computation display -->
+                <templates:page_count_computation x:Name="computationGroup" Grid.Row="1" Margin="0,10,0,10" Contract="{Binding ElementName=contractDataGrid,Path=SelectedItem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SetCounter="computationGroup_SetCounter_1" SaveReport="computationGroup_SaveReport"/>
+                <!-- saved reports list -->
+                <GroupBox Header="Saved Reports" Grid.Row="2" Height="169">
+                    <DataGrid x:Name="savedReportsDataGrid" Margin="0,3,0,0">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn CellStyle="{StaticResource DataGridCell.Style.ShowOnHover}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource BorderlessButton}" Click="EditComputation_btn_Click" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-edit}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Navy" ToolTip="Edit Computation"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn CellStyle="{StaticResource DataGridCell.Style.ShowOnHover}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-trash-alt}" Click="DeleteReport_btn_Click" Style="{StaticResource BorderlessButton}" Foreground="Red" Margin="{StaticResource DataGridTextCell.Margin}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn CellStyle="{StaticResource DataGridCell.Style.ShowOnHover}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-print}" Click="PrintReport_btn_Click" Style="{StaticResource BorderlessButton}" Foreground="Gray" Margin="{StaticResource DataGridTextCell.Margin}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Created" Binding="{Binding CreatedDate,StringFormat=MM/dd/yyyy}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}"/>
+                            <DataGridTextColumn Header="For the Month of" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" SortMemberPath="ConsumptionDate">
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="ConsumptionMonth" Converter="{StaticResource MonthNameConverter}"/>
+                                        <Binding Path="ConsumptionYear"/>
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Cover Period" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}">
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding StringFormat="{}{0:MM/dd/yyyy} - {1:MM/dd/yyyy}">
+                                        <Binding Path="FirstCounter.Date"/>
+                                        <Binding Path="LastCounter.Date"/>
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Basic Charge" Binding="{Binding Contract.BasicPrice,Converter={StaticResource CurrencyAllowZeroDisplayConverter}}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}"/>
+                            <DataGridTextColumn Header="Total Excess Cost" Binding="{Binding TotalExcessCost,Converter={StaticResource CurrencyAllowZeroDisplayConverter}}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}"/>
+                            <DataGridTextColumn Header="Grand Total" Binding="{Binding GrandTotal,Converter={StaticResource CurrencyAllowZeroDisplayConverter}}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" FontWeight="Bold" Foreground="Red"/>
+                            <DataGridTemplateColumn Header="File" Width="35" HeaderStyle="{StaticResource DataGridColumnHeader.Center}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Grid.Style>
+                                                <Style TargetType="{x:Type Grid}">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding JustificationFile}" Value="">
+                                                            <Setter Property="Visibility" Value="Hidden"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding JustificationFile}" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Hidden"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <Button Style="{StaticResource BorderlessButton}" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-file}" Foreground="#f6b40f" ToolTip="{Binding JustificationFile}" Click="OpenJustificationFile_Click"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
+        
+        <!-- select period popup -->
+        <customs:PopupModal x:Name="selectPeriodPopup" Placement="Bottom" VerticalOffset="10" HorizontalOffset="-100">
+            <Grid>
+                <Grid.Effect>
+                    <DropShadowEffect/>
+                </Grid.Effect>
+                <Border Background="White" BorderBrush="Gray" BorderThickness="1" Margin="0,0,3,3">
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Select Period" FontWeight="Bold" FontSize="14"/>
+                        <DataGrid Grid.Row="1" x:Name="selectPeriodDatagrid" Margin="0,3,0,0" Width="700" Height="300">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="Select">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type customs:PopupModal}},Path=SubmitCommand}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Date" Binding="{Binding Date,StringFormat={}{0:MM/dd/yyyy}}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" Width="90">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Right}">
+                                            <Setter Property="Foreground" Value="Black"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsReplaced}" Value="True">
+                                                    <Setter Property="Foreground" Value="Silver"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Unit Name" Binding="{Binding UnitName}" Width="100">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Left}">
+                                            <Setter Property="Foreground" Value="Black"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsReplaced}" Value="True">
+                                                    <Setter Property="Foreground" Value="Silver"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Serial #" Binding="{Binding UnitSerialNumber}" Width="100">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Left}">
+                                            <Setter Property="Foreground" Value="Black"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsReplaced}" Value="True">
+                                                    <Setter Property="Foreground" Value="Silver"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridCheckBoxColumn Header="Replaced" Binding="{Binding IsReplaced}" ElementStyle="{StaticResource DataGridCheckBoxColumn.ElementStyle}"/>
+                                <DataGridTextColumn Header="Black A4" Binding="{Binding PageCount_Black_A4,StringFormat={}{0:N0}}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" Width="*"/>
+                                <DataGridTextColumn Header="Black A3" Binding="{Binding PageCount_Black_A3,StringFormat={}{0:N0}}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" Width="*"/>
+                                <DataGridTextColumn Header="Colored A4" Binding="{Binding PageCount_Colored_A4,StringFormat={}{0:N0}}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" Width="*"/>
+                                <DataGridTextColumn Header="Colored A3" Binding="{Binding PageCount_Colored_A3,StringFormat={}{0:N0}}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </customs:PopupModal>
+        
+        <!-- select invoice popup -->
+        <customs:PopupModal Name="selectInvoicePopup" Placement="Bottom">
+            <Grid>
+                <Grid.Effect>
+                    <DropShadowEffect/>
+                </Grid.Effect>
+                <Border Background="White" BorderBrush="Gray" BorderThickness="1" Margin="0,0,3,3">
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" DataContext="{Binding ElementName=selectInvoicePopup,Path=DataContext.Totals}" Margin="0,0,0,8">
+                            <TextBlock>
+                                Total Invoice Amount: <Run Text="{Binding TotalGrandTotal,Converter={StaticResource CurrencyAllowZeroDisplayConverter}}" FontWeight="Bold" Foreground="Red"/>
+                            </TextBlock>
+                        </StackPanel>
+                        <DataGrid Grid.Row="1" Height="250" ItemsSource="{Binding ElementName=selectInvoicePopup,Path=DataContext.List}">
+                            <DataGrid.Columns>
+                                <!--<DataGridTextColumn Header="Created" Binding="{Binding CreatedDate,StringFormat=MM/dd/yyyy}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}"/>-->
+                                <DataGridTextColumn Header="For the Month of" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" SortMemberPath="ConsumptionDate">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="ConsumptionMonth" Converter="{StaticResource MonthNameConverter}"/>
+                                            <Binding Path="ConsumptionYear"/>
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Cover Period" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding StringFormat="{}{0:MM/dd/yyyy} - {1:MM/dd/yyyy}">
+                                            <Binding Path="FirstCounter.Date"/>
+                                            <Binding Path="LastCounter.Date"/>
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Basic Charge" Binding="{Binding Contract.BasicPrice,Converter={StaticResource CurrencyAllowZeroDisplayConverter}}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}"/>
+                                <DataGridTextColumn Header="Total Excess Cost" Binding="{Binding TotalExcessCost,Converter={StaticResource CurrencyAllowZeroDisplayConverter}}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}"/>
+                                <DataGridTextColumn Header="Grand Total" Binding="{Binding GrandTotal,Converter={StaticResource CurrencyAllowZeroDisplayConverter}}" HeaderStyle="{StaticResource DataGridColumnHeader.Right}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Right}" FontWeight="Bold" Foreground="Red"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </customs:PopupModal>
+    </Grid>
+</Page>

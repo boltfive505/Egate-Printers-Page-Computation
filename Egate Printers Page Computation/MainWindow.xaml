@@ -1,0 +1,84 @@
+﻿<Window x:Class="Egate_Printers_Page_Computation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Egate_Printers_Page_Computation"
+        xmlns:modal="clr-namespace:CustomControls.Modal;assembly=CustomControls"
+        xmlns:pages="clr-namespace:Egate_Printers_Page_Computation.Pages"
+        mc:Ignorable="d"
+        Title="Printers Page Computation" Height="450" Width="800"
+        WindowState="Maximized"
+        TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType">
+    <Grid>
+        <TabControl x:Name="tabControl"
+                    pages:tutorials_calendar_page.SelectJobSchedule="tabControl_SelectJobSchedule"
+                    local:MainWindow.ChangeTab="tabControl_ChangeTab">
+            <TabItem Header="PAGE COUNTER" Padding="{StaticResource MainTab.Header.Padding}" local:MainWindow.PageTabName="PageCounter">
+                <Frame Margin="{StaticResource MainTab.Page.Margin}">
+                    <Frame.Content>
+                        <pages:page_counter_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="COLLECTION" Padding="{StaticResource MainTab.Header.Padding}" local:MainWindow.PageTabName="Collection">
+                <Frame Margin="{StaticResource MainTab.Page.Margin}">
+                    <Frame.Content>
+                        <pages:collection_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="COLLECTION 2307" Padding="{StaticResource MainTab.Header.Padding}" local:MainWindow.PageTabName="Collection_2307">
+                <Frame Margin="{StaticResource MainTab.Page.Margin}">
+                    <Frame.Content>
+                        <pages:collection_2307_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="INVOICE" Padding="{StaticResource MainTab.Header.Padding}" local:MainWindow.PageTabName="Invoice">
+                <Frame Margin="{StaticResource MainTab.Page.Margin}">
+                    <Frame.Content>
+                        <pages:invoice_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="INVOICE COMPARISON" Padding="{StaticResource MainTab.Header.Padding}" local:MainWindow.PageTabName="Invoice">
+                <Frame Margin="{StaticResource MainTab.Page.Margin}">
+                    <Frame.Content>
+                        <pages:invoice_comparison_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="TO DO LIST" Padding="{StaticResource MainTab.Header.Padding}" local:MainWindow.PageTabName="ToDoList">
+                <Frame Margin="{StaticResource MainTab.Page.Margin}">
+                    <Frame.Content>
+                        <pages:company_list_followup_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="SETUP" Padding="{StaticResource MainTab.Header.Padding}" local:MainWindow.PageTabName="Setup">
+                <Frame Margin="{StaticResource MainTab.Page.Margin}">
+                    <Frame.Content>
+                        <pages:setup_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem x:Name="tutorialsTab" Header="TUTORIALS" Padding="{StaticResource MainTab.Header.Padding}" local:MainWindow.PageTabName="Tutorials">
+                <Frame Margin="{StaticResource MainTab.Page.Margin}">
+                    <Frame.Content>
+                        <pages:tutorials_page x:Name="tutorialsPage"/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem Header="CALENDAR" Padding="{StaticResource MainTab.Header.Padding}" local:MainWindow.PageTabName="Calendar">
+                <Frame Margin="{StaticResource MainTab.Page.Margin}">
+                    <Frame.Content>
+                        <pages:tutorials_calendar_page/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+        </TabControl>
+
+        <modal:ModalForm/>
+    </Grid>
+</Window>

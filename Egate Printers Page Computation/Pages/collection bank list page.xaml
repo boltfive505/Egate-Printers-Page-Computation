@@ -1,0 +1,53 @@
+﻿<Page x:Class="Egate_Printers_Page_Computation.Pages.collection_bank_list_page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Egate_Printers_Page_Computation.Pages"
+      xmlns:customs="clr-namespace:CustomControls;assembly=CustomControls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="collection_employee_list_page" Loaded="Page_Loaded">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="95"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="filtersGroup" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <customs:LabelContainer Header="Search Bank Name" Placement="Left">
+                <TextBox Text="{Binding FilterKeyword}" Width="200"/>
+            </customs:LabelContainer>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,8">
+            <Button Content="Add Bank" Click="AddBank_Click"/>
+        </StackPanel>
+
+        <!-- bank list -->
+        <DataGrid x:Name="employeesDataGrid" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn CellStyle="{StaticResource DataGridCell.Style.ShowOnHover}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Button Style="{StaticResource BorderlessButton}" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-edit}" Click="AddBank_Click" Margin="3,0,3,0" Foreground="Navy" ToolTip="Edit Employee"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Bank Name" Binding="{Binding BankName}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DataGridTextColumn.ElementStyle.Left}">
+                            <!--<Style.Triggers>
+                                <DataTrigger Binding="{Binding IsActive}" Value="False">
+                                    <Setter Property="Foreground" Value="Gray"/>
+                                </DataTrigger>
+                            </Style.Triggers>-->
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

@@ -1,0 +1,101 @@
+﻿<Page x:Class="Egate_Printers_Page_Computation.Pages.company_list_followup_page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Egate_Printers_Page_Computation.Pages"
+      xmlns:me="clr-namespace:Egate_Printers_Page_Computation"
+      xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:linq="clr-namespace:System.Linq;assembly=System.Core"
+      xmlns:helpers="clr-namespace:Egate_Printers_Page_Computation.Helpers"
+      xmlns:customs="clr-namespace:CustomControls;assembly=CustomControls"
+      xmlns:popups="clr-namespace:Egate_Printers_Page_Computation.Popups"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="invoice_page" Loaded="Page_Loaded">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="95"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- filters company -->
+        <GroupBox x:Name="filtersGroup" Header="Filter Company" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource Filters.GroupBox.Margin}">
+                <customs:LabelContainer Header="Company" Placement="Left" Margin="{StaticResource Filters.Fields.Margin}">
+                    <TextBox Text="{Binding FilterCompanyName,UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                </customs:LabelContainer>
+                <customs:LabelContainer Header="Location" Placement="Left" Margin="{StaticResource Filters.Fields.Margin}">
+                    <ComboBox ItemsSource="{Binding LocationList}" SelectedValuePath="Id" DisplayMemberPath="LocationName" SelectedValue="{Binding FilterLocation}" Width="120" Validation.ErrorTemplate="{x:Null}"/>
+                </customs:LabelContainer>
+                <!--<CheckBox Content="Show InActive" IsChecked="{Binding ShowInactiveCompany}" Style="{StaticResource RightCheckBox}" VerticalAlignment="Center" Margin="{StaticResource Filters.Fields.Margin}"/>-->
+            </StackPanel>
+        </GroupBox>
+
+        <!-- company details popup -->
+        <customs:PopupModal x:Name="companyDetailsPopup" Placement="Right" VerticalOffset="5">
+            <Grid>
+                <Grid.Effect>
+                    <DropShadowEffect/>
+                </Grid.Effect>
+                <Border Background="White" BorderBrush="Gray" BorderThickness="1" Margin="0,0,3,3">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Company Details" FontWeight="Bold" FontSize="16" Margin="12,5,0,0"/>
+                        <Button Style="{StaticResource CloseButton}" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type customs:PopupModal}}, Path=CloseCommand}" HorizontalAlignment="Right" Margin="5"/>
+                        <popups:company_details_popup Grid.Row="1" DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type customs:PopupModal}}}"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </customs:PopupModal>
+        
+        <!-- company list -->
+        <DataGrid x:Name="companyDataGrid" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource BorderlessButton}" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-info}" Click="CompanyDetails_Click" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="{StaticResource DataGridTextCell.Margin}" ToolTip="Click for more info"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Company Name" Binding="{Binding CompanyName}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding ClientType}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Width="65"/>
+                <DataGridTextColumn Header="Location" Binding="{Binding Location.LocationName}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Width="65"/>
+                <DataGridTemplateColumn Header="Invoice">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="{StaticResource DataGridTextCell.Margin}">
+                                <StackPanel.Style>
+                                    <Style TargetType="{x:Type StackPanel}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding InvoiceNumberMissingList.Count}" Value="0">
+                                                <Setter Property="Visibility" Value="Hidden"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <Button Style="{StaticResource SquareBadge}" Content="{Binding InvoiceNumberMissingList.Count}" Click="SelectCompanyToInvoice_Click" Background="Red" Foreground="White" FontWeight="Bold" Cursor="Hand" IsHitTestVisible="True"/>
+                                <TextBlock Text="{Binding InvoiceNumberMissingList,Converter={StaticResource StringListJoinConverter}}" Margin="6,0,0,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridCheckBoxColumn Header="Collection" Binding="{Binding HasFollowupCollection}" HeaderStyle="{StaticResource DataGridColumnHeader.Center}" ElementStyle="{StaticResource DataGridCheckBoxColumn.ElementStyle}"/>
+                <DataGridCheckBoxColumn Header="2307" Binding="{Binding HasFollowup2307}" HeaderStyle="{StaticResource DataGridColumnHeader.Center}" ElementStyle="{StaticResource DataGridCheckBoxColumn.ElementStyle}"/>
+                <DataGridTemplateColumn CellStyle="{StaticResource DataGridCell.Style.ShowOnHover}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource BorderlessButton}" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-edit}" Click="EditToDoNotes_Click" Margin="{StaticResource DataGridTextCell.Margin}" Foreground="Navy" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Edit Notes"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Notes" Binding="{Binding ToDoNotes}" ElementStyle="{StaticResource DataGridTextColumn.ElementStyle.Left}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

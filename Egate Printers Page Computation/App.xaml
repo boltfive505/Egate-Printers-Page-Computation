@@ -1,0 +1,42 @@
+﻿<Application x:Class="Egate_Printers_Page_Computation.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Egate_Printers_Page_Computation"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             Startup="Application_Startup">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/FontIcons.FontAwesome;component/fontawesome.xaml"/>
+                <ResourceDictionary Source="/Styles/main styles.xaml"/>
+                <ResourceDictionary Source="/Styles/converters.xaml"/>
+                <ResourceDictionary Source="/Styles/tooltips.xaml"/>
+                <ResourceDictionary Source="/Styles/datagrid styles.xaml"/>
+                <ResourceDictionary Source="/Styles/button styles.xaml"/>
+                <ResourceDictionary Source="/Styles/checkbox styles.xaml"/>
+                <ResourceDictionary Source="/Styles/PlusMinusExpander.xaml"/>
+                <ResourceDictionary Source="/Styles/TutorialCalendarStyle.xaml"/>
+                <!-- template styles -->
+                <ResourceDictionary Source="/Templates/Styles/BorderedContent.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <ObjectDataProvider x:Key="ScheduleNotesTypeData" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="local:ScheduleNotesType"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            
+            <ObjectDataProvider x:Key="CompanyClientTypeFullData" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="local:CompanyClientType"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <ObjectDataProvider x:Key="CompanyClientTypeSelectData" MethodName="GetValuesExcept" ObjectType="{x:Type local:EnumExt}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="local:CompanyClientType"/>
+                    <x:Static Member="local:CompanyClientType.None"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

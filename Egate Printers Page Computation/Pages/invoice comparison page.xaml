@@ -1,0 +1,19 @@
+﻿<Page x:Class="Egate_Printers_Page_Computation.Pages.invoice_comparison_page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Egate_Printers_Page_Computation.Pages"
+      xmlns:templates="clr-namespace:Egate_Printers_Page_Computation.Templates"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="1500"
+      Title="invoice_page" Loaded="Page_Loaded">
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <templates:invoice_comparison_side x:Name="comparisonLeft" Grid.Column="0" FilterChanged="InvoiceList_FilterChanged"/>
+        <templates:invoice_comparison_side x:Name="comparisonRight" Grid.Column="1" Margin="10,0,0,0" FilterChanged="InvoiceList_FilterChanged"/>
+    </Grid>
+</Page>

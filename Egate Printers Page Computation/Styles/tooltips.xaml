@@ -1,0 +1,84 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Egate_Printers_Page_Computation.Styles">
+    <Style x:Key="QuestionTextboxStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource fontawesome-solid}"/>
+        <Setter Property="Text" Value="{StaticResource fa-question-circle}"/>
+        <Setter Property="Foreground" Value="SteelBlue"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="ToolTipService.InitialShowDelay" Value="0"/>
+        <Setter Property="ToolTipService.ShowDuration" Value="999999"/>
+    </Style>
+
+    <Style x:Key="QuestionRunStyle" TargetType="{x:Type Run}">
+        <Setter Property="FontFamily" Value="{StaticResource fontawesome-solid}"/>
+        <Setter Property="Text" Value="{StaticResource fa-question-circle}"/>
+        <Setter Property="Foreground" Value="SteelBlue"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="ToolTipService.InitialShowDelay" Value="0"/>
+        <Setter Property="ToolTipService.ShowDuration" Value="999999"/>
+    </Style>
+    
+    <ToolTip x:Key="InvoiceFileTooltip">
+        <StackPanel Orientation="Vertical" Width="500" Margin="5">
+            <TextBlock FontSize="14">
+                When Attaching the Invoice File, you must strictly follow the rules below:<LineBreak/>
+                • Attach to the correct <Run Foreground="Red" FontWeight="Bold">Company</Run> &amp; <Run Foreground="Red" FontWeight="Bold">Sales Invoice Number</Run>.<LineBreak/>
+                • Must be the <Run Foreground="Red" FontWeight="Bold">Blue Copy Paper</Run>, with <Run Foreground="Red" FontWeight="Bold">Customer's signature</Run>.<LineBreak/>
+                • Must be on <Run Foreground="Red" FontWeight="Bold">Landscape</Run> orientation.
+            </TextBlock>
+            <Image Source="pack://application:,,,/res/invoice file sample.jpg" Margin="0,10,0,0"/>
+        </StackPanel>
+    </ToolTip>
+
+    <ToolTip x:Key="ScheduledTooltip">
+        <TextBlock FontSize="14">
+            Scheduled should have date only when for <Run Foreground="DarkGreen" FontWeight="Bold">Pick-Up</Run>.<LineBreak/>
+            If for <Run Foreground="Red" FontWeight="Bold">Follow-Up</Run>, schedule should be no date / blank.
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="CollectionContactPerson">
+        <TextBlock FontSize="14">
+            If the text becomes <Run Foreground="Red" FontWeight="Bold">red</Run>, means that the company has no schedule yet.
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="ExportInvoiceTooltip">
+        <TextBlock FontSize="14">
+            Can export invoice list, used for comparing between different months
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="ExportCompanyMissingInvoiceTooltip">
+        <TextBlock FontSize="14">
+            Exports Company list, highlighted with <Run Foreground="Red" FontWeight="Bold">red text</Run>, that needs to issue Invoice.
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="CompanyNameMissingInvoiceTooltip">
+        <TextBlock FontSize="14">
+            If Company Name is highlighed with <Run Foreground="Red" FontWeight="Bold">red text</Run>, need to issue Invoice for that Company.
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="CompanyInvoiceCountTooltip">
+        <TextBlock FontSize="14">
+            Number of Companies in the Invoice List.<LineBreak/>Duplicate companies is counted as 1.
+        </TextBlock>
+    </ToolTip>
+    
+    <ToolTip x:Key="InvoiceComparisonCompanyNameTooltip">
+        <TextBlock FontSize="14">
+            If text is <Run Foreground="Red" FontWeight="Bold">red</Run>, means that it is missing from the other month.
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="InvoiceComparisonExportTooltip">
+        <TextBlock FontSize="14">
+            This will only export the Company Names with <Run Foreground="Red" FontWeight="Bold">red text</Run>.<LineBreak/>
+            You will need this list to update the other month, so that it will be tally.
+        </TextBlock>
+    </ToolTip>
+</ResourceDictionary>
