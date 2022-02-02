@@ -9,6 +9,7 @@ using Egate_Printers_Page_Computation.Helpers;
 using Egate_Printers_Page_Computation.Objects;
 using PrintersPageComputation.Model;
 using PropertyChanged;
+using bolt5.CloneCopy;
 
 namespace Egate_Printers_Page_Computation.Objects
 {

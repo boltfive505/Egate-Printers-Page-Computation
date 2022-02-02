@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using AForge.Video;
 using AForge.Video.DirectShow;
-using CustomControls.Modal;
+using bolt5.ModalWpf;
 
 namespace Egate_Printers_Page_Computation.Templates
 {

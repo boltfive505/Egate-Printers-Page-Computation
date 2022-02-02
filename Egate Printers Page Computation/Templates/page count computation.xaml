@@ -4,16 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Egate_Printers_Page_Computation.Templates"
-             xmlns:templates="clr-namespace:Egate_Printers_Page_Computation.Templates"
+             xmlns:customs="clr-namespace:bolt5.CustomControls;assembly=bolt5.CustomControls.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <Style TargetType="{x:Type templates:BorderedContent}" BasedOn="{StaticResource {x:Type templates:BorderedContent}}">
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="HorizontalContentAlignment" Value="Right"/>
-        </Style>
-    </UserControl.Resources>
     <Grid Background="White" DataContext="{Binding Path=Computations, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:page_count_computation}}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="45"/>
@@ -41,88 +34,88 @@
         <!--<Button Grid.RowSpan="2" Grid.ColumnSpan="2" Click="PrintReport_btn_Click" Content="Print Report" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
         <Button Grid.RowSpan="2" Grid.ColumnSpan="2" Click="SaveReport_btn_Click" Content="Save Report" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <!-- column header -->
-        <templates:BorderedContent Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" Background="WhiteSmoke">
+        <customs:BorderedContent Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" Background="WhiteSmoke">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Period"/>
                 <!--<Button Style="{StaticResource BorderlessButton}" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-exchange-alt}" Click="SwapPeriods_btn_Click" Foreground="Gray" Margin="5,0,0,0" ToolTip="Swap Periods"/>-->
             </StackPanel>
-        </templates:BorderedContent>
+        </customs:BorderedContent>
         <!-- first period -->
-        <templates:BorderedContent Grid.Row="1" Grid.Column="2">
+        <customs:BorderedContent Grid.Row="1" Grid.Column="2">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding FirstCounter.Date,StringFormat={}{0:MM/dd/yyyy}}" Foreground="Purple" FontWeight="Bold" HorizontalAlignment="Right"/>
                 <Button Style="{StaticResource BorderlessButton}" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-calendar-day}" Click="SetFirstPeriod_btn_Click" Foreground="gray" HorizontalAlignment="Left" Margin="5,0,0,0" ToolTip="Select Period"/>
             </StackPanel>
-        </templates:BorderedContent>
+        </customs:BorderedContent>
         <!-- last period -->
-        <templates:BorderedContent Grid.Row="1" Grid.Column="3">
+        <customs:BorderedContent Grid.Row="1" Grid.Column="3">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding LastCounter.Date,StringFormat={}{0:MM/dd/yyyy}}" Foreground="Purple" FontWeight="Bold" HorizontalAlignment="Right"/>
                 <Button Style="{StaticResource BorderlessButton}" FontFamily="{StaticResource fontawesome-solid}" Content="{StaticResource fa-calendar-day}" Click="SetLatestPeriod_btn_Click" Foreground="gray" HorizontalAlignment="Left" Margin="5,0,0,0" ToolTip="Select Period"/>
             </StackPanel>
-        </templates:BorderedContent>
-        <templates:BorderedContent Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Content="Total Count" Background="WhiteSmoke" HorizontalContentAlignment="Center"/>
-        <templates:BorderedContent Grid.Row="0" Grid.Column="5" Grid.RowSpan="2" Content="Basic Count" Background="WhiteSmoke" HorizontalContentAlignment="Center"/>
-        <templates:BorderedContent Grid.Row="0" Grid.Column="6" Grid.RowSpan="2" Content="Excess Count" Background="WhiteSmoke" HorizontalContentAlignment="Center"/>
-        <templates:BorderedContent Grid.Row="0" Grid.Column="7" Grid.RowSpan="2" Content="Excess Charge" Background="WhiteSmoke" HorizontalContentAlignment="Center"/>
-        <templates:BorderedContent Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Content="Excess Cost" Background="WhiteSmoke" HorizontalContentAlignment="Center"/>
+        </customs:BorderedContent>
+        <customs:BorderedContent Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Content="Total Count" Background="WhiteSmoke" HorizontalContentAlignment="Center"/>
+        <customs:BorderedContent Grid.Row="0" Grid.Column="5" Grid.RowSpan="2" Content="Basic Count" Background="WhiteSmoke" HorizontalContentAlignment="Center"/>
+        <customs:BorderedContent Grid.Row="0" Grid.Column="6" Grid.RowSpan="2" Content="Excess Count" Background="WhiteSmoke" HorizontalContentAlignment="Center"/>
+        <customs:BorderedContent Grid.Row="0" Grid.Column="7" Grid.RowSpan="2" Content="Excess Charge" Background="WhiteSmoke" HorizontalContentAlignment="Center"/>
+        <customs:BorderedContent Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Content="Excess Cost" Background="WhiteSmoke" HorizontalContentAlignment="Center"/>
         <!-- row header -->
-        <templates:BorderedContent Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Content="Black" Background="WhiteSmoke" HorizontalContentAlignment="Center">
-            <templates:BorderedContent.LayoutTransform>
+        <customs:BorderedContent Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Content="Black" Background="WhiteSmoke" HorizontalContentAlignment="Center">
+            <customs:BorderedContent.LayoutTransform>
                 <RotateTransform Angle="-90"/>
-            </templates:BorderedContent.LayoutTransform>
-        </templates:BorderedContent>
-        <templates:BorderedContent Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Content="Color" Background="WhiteSmoke" HorizontalContentAlignment="Center">
-            <templates:BorderedContent.LayoutTransform>
+            </customs:BorderedContent.LayoutTransform>
+        </customs:BorderedContent>
+        <customs:BorderedContent Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Content="Color" Background="WhiteSmoke" HorizontalContentAlignment="Center">
+            <customs:BorderedContent.LayoutTransform>
                 <RotateTransform Angle="-90"/>
-            </templates:BorderedContent.LayoutTransform>
-        </templates:BorderedContent>
-        <templates:BorderedContent Grid.Row="2" Grid.Column="1" Content="A4"/>
-        <templates:BorderedContent Grid.Row="3" Grid.Column="1" Content="A3"/>
-        <templates:BorderedContent Grid.Row="4" Grid.Column="1" Content="A4"/>
-        <templates:BorderedContent Grid.Row="5" Grid.Column="1" Content="A3"/>
+            </customs:BorderedContent.LayoutTransform>
+        </customs:BorderedContent>
+        <customs:BorderedContent Grid.Row="2" Grid.Column="1" Content="A4"/>
+        <customs:BorderedContent Grid.Row="3" Grid.Column="1" Content="A3"/>
+        <customs:BorderedContent Grid.Row="4" Grid.Column="1" Content="A4"/>
+        <customs:BorderedContent Grid.Row="5" Grid.Column="1" Content="A3"/>
         <!-- body -->
         <!-- first period -->
-        <templates:BorderedContent Grid.Row="2" Grid.Column="2" Content="{Binding FirstComputation.Computations[0].FirstPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="3" Grid.Column="2" Content="{Binding FirstComputation.Computations[1].FirstPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="4" Grid.Column="2" Content="{Binding FirstComputation.Computations[2].FirstPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="5" Grid.Column="2" Content="{Binding FirstComputation.Computations[3].FirstPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="2" Grid.Column="2" Content="{Binding FirstComputation.Computations[0].FirstPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="3" Grid.Column="2" Content="{Binding FirstComputation.Computations[1].FirstPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="4" Grid.Column="2" Content="{Binding FirstComputation.Computations[2].FirstPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="5" Grid.Column="2" Content="{Binding FirstComputation.Computations[3].FirstPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
         <!-- last period -->
-        <templates:BorderedContent Grid.Row="2" Grid.Column="3" Content="{Binding FirstComputation.Computations[0].LastPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="3" Grid.Column="3" Content="{Binding FirstComputation.Computations[1].LastPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="4" Grid.Column="3" Content="{Binding FirstComputation.Computations[2].LastPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="5" Grid.Column="3" Content="{Binding FirstComputation.Computations[3].LastPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="2" Grid.Column="3" Content="{Binding FirstComputation.Computations[0].LastPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="3" Grid.Column="3" Content="{Binding FirstComputation.Computations[1].LastPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="4" Grid.Column="3" Content="{Binding FirstComputation.Computations[2].LastPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="5" Grid.Column="3" Content="{Binding FirstComputation.Computations[3].LastPeriodCount,Converter={StaticResource NumberDisplayConverter}}"/>
         <!-- total count -->
-        <templates:BorderedContent Grid.Row="2" Grid.Column="4" Content="{Binding FirstComputation.Computations[0].TotalCount,Converter={StaticResource NumberDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="3" Grid.Column="4" Content="{Binding FirstComputation.Computations[1].TotalCount,Converter={StaticResource NumberDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="4" Grid.Column="4" Content="{Binding FirstComputation.Computations[2].TotalCount,Converter={StaticResource NumberDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="5" Grid.Column="4" Content="{Binding FirstComputation.Computations[3].TotalCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="2" Grid.Column="4" Content="{Binding FirstComputation.Computations[0].TotalCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="3" Grid.Column="4" Content="{Binding FirstComputation.Computations[1].TotalCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="4" Grid.Column="4" Content="{Binding FirstComputation.Computations[2].TotalCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="5" Grid.Column="4" Content="{Binding FirstComputation.Computations[3].TotalCount,Converter={StaticResource NumberDisplayConverter}}"/>
         <!-- basic count -->
-        <templates:BorderedContent Grid.Row="2" Grid.Column="5" Content="{Binding Contract.PageLimit_Black_A4,Converter={StaticResource NumberDisplayConverter}}" Foreground="DarkOrange" FontWeight="Bold"/>
-        <templates:BorderedContent Grid.Row="3" Grid.Column="5" Content="{Binding Contract.PageLimit_Black_A3,Converter={StaticResource NumberDisplayConverter}}" Foreground="DarkOrange" FontWeight="Bold"/>
-        <templates:BorderedContent Grid.Row="4" Grid.Column="5" Content="{Binding Contract.PageLimit_Colored_A4,Converter={StaticResource NumberDisplayConverter}}" Foreground="DarkOrange" FontWeight="Bold"/>
-        <templates:BorderedContent Grid.Row="5" Grid.Column="5" Content="{Binding Contract.PageLimit_Colored_A3,Converter={StaticResource NumberDisplayConverter}}" Foreground="DarkOrange" FontWeight="Bold"/>
+        <customs:BorderedContent Grid.Row="2" Grid.Column="5" Content="{Binding Contract.PageLimit_Black_A4,Converter={StaticResource NumberDisplayConverter}}" Foreground="DarkOrange" FontWeight="Bold"/>
+        <customs:BorderedContent Grid.Row="3" Grid.Column="5" Content="{Binding Contract.PageLimit_Black_A3,Converter={StaticResource NumberDisplayConverter}}" Foreground="DarkOrange" FontWeight="Bold"/>
+        <customs:BorderedContent Grid.Row="4" Grid.Column="5" Content="{Binding Contract.PageLimit_Colored_A4,Converter={StaticResource NumberDisplayConverter}}" Foreground="DarkOrange" FontWeight="Bold"/>
+        <customs:BorderedContent Grid.Row="5" Grid.Column="5" Content="{Binding Contract.PageLimit_Colored_A3,Converter={StaticResource NumberDisplayConverter}}" Foreground="DarkOrange" FontWeight="Bold"/>
         <!-- excess count -->
-        <templates:BorderedContent Grid.Row="2" Grid.Column="6" Content="{Binding FirstComputation.Computations[0].ExcessCount,Converter={StaticResource NumberDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="3" Grid.Column="6" Content="{Binding FirstComputation.Computations[1].ExcessCount,Converter={StaticResource NumberDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="4" Grid.Column="6" Content="{Binding FirstComputation.Computations[2].ExcessCount,Converter={StaticResource NumberDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="5" Grid.Column="6" Content="{Binding FirstComputation.Computations[3].ExcessCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="2" Grid.Column="6" Content="{Binding FirstComputation.Computations[0].ExcessCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="3" Grid.Column="6" Content="{Binding FirstComputation.Computations[1].ExcessCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="4" Grid.Column="6" Content="{Binding FirstComputation.Computations[2].ExcessCount,Converter={StaticResource NumberDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="5" Grid.Column="6" Content="{Binding FirstComputation.Computations[3].ExcessCount,Converter={StaticResource NumberDisplayConverter}}"/>
         <!-- excess charge -->
-        <templates:BorderedContent Grid.Row="2" Grid.Column="7" Content="{Binding Contract.ExcessPrice_Black_A4,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="DarkGreen" FontWeight="Bold"/>
-        <templates:BorderedContent Grid.Row="3" Grid.Column="7" Content="{Binding Contract.ExcessPrice_Black_A3,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="DarkGreen" FontWeight="Bold"/>
-        <templates:BorderedContent Grid.Row="4" Grid.Column="7" Content="{Binding Contract.ExcessPrice_Colored_A4,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="DarkGreen" FontWeight="Bold"/>
-        <templates:BorderedContent Grid.Row="5" Grid.Column="7" Content="{Binding Contract.ExcessPrice_Colored_A3,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="DarkGreen" FontWeight="Bold"/>
+        <customs:BorderedContent Grid.Row="2" Grid.Column="7" Content="{Binding Contract.ExcessPrice_Black_A4,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="DarkGreen" FontWeight="Bold"/>
+        <customs:BorderedContent Grid.Row="3" Grid.Column="7" Content="{Binding Contract.ExcessPrice_Black_A3,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="DarkGreen" FontWeight="Bold"/>
+        <customs:BorderedContent Grid.Row="4" Grid.Column="7" Content="{Binding Contract.ExcessPrice_Colored_A4,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="DarkGreen" FontWeight="Bold"/>
+        <customs:BorderedContent Grid.Row="5" Grid.Column="7" Content="{Binding Contract.ExcessPrice_Colored_A3,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="DarkGreen" FontWeight="Bold"/>
         <!-- excess cost -->
-        <templates:BorderedContent Grid.Row="2" Grid.Column="8" Content="{Binding FirstComputation.Computations[0].ExcessCost,Converter={StaticResource CurrencyDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="3" Grid.Column="8" Content="{Binding FirstComputation.Computations[1].ExcessCost,Converter={StaticResource CurrencyDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="4" Grid.Column="8" Content="{Binding FirstComputation.Computations[2].ExcessCost,Converter={StaticResource CurrencyDisplayConverter}}"/>
-        <templates:BorderedContent Grid.Row="5" Grid.Column="8" Content="{Binding FirstComputation.Computations[3].ExcessCost,Converter={StaticResource CurrencyDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="2" Grid.Column="8" Content="{Binding FirstComputation.Computations[0].ExcessCost,Converter={StaticResource CurrencyDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="3" Grid.Column="8" Content="{Binding FirstComputation.Computations[1].ExcessCost,Converter={StaticResource CurrencyDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="4" Grid.Column="8" Content="{Binding FirstComputation.Computations[2].ExcessCost,Converter={StaticResource CurrencyDisplayConverter}}"/>
+        <customs:BorderedContent Grid.Row="5" Grid.Column="8" Content="{Binding FirstComputation.Computations[3].ExcessCost,Converter={StaticResource CurrencyDisplayConverter}}"/>
         <!-- total -->
-        <templates:BorderedContent Grid.Row="6" Grid.Column="7" Content="Total Excess Cost" Background="WhiteSmoke"/>
-        <templates:BorderedContent Grid.Row="7" Grid.Column="7" Content="Basic Charge" Background="WhiteSmoke"/>
-        <templates:BorderedContent Grid.Row="8" Grid.Column="7" Content="Grand Total" Background="WhiteSmoke"/>
-        <templates:BorderedContent Grid.Row="6" Grid.Column="8" Content="{Binding FirstComputation.TotalExcessCost,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="DarkBlue" FontWeight="Bold"/>
-        <templates:BorderedContent Grid.Row="7" Grid.Column="8" Content="{Binding Contract.BasicPrice,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="DarkGreen" FontWeight="Bold"/>
-        <templates:BorderedContent Grid.Row="8" Grid.Column="8" Grid.ColumnSpan="2" Content="{Binding FirstComputation.GrandTotal,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="Red" FontWeight="Bold"/>
+        <customs:BorderedContent Grid.Row="6" Grid.Column="7" Content="Total Excess Cost" Background="WhiteSmoke"/>
+        <customs:BorderedContent Grid.Row="7" Grid.Column="7" Content="Basic Charge" Background="WhiteSmoke"/>
+        <customs:BorderedContent Grid.Row="8" Grid.Column="7" Content="Grand Total" Background="WhiteSmoke"/>
+        <customs:BorderedContent Grid.Row="6" Grid.Column="8" Content="{Binding FirstComputation.TotalExcessCost,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="DarkBlue" FontWeight="Bold"/>
+        <customs:BorderedContent Grid.Row="7" Grid.Column="8" Content="{Binding Contract.BasicPrice,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="DarkGreen" FontWeight="Bold"/>
+        <customs:BorderedContent Grid.Row="8" Grid.Column="8" Grid.ColumnSpan="2" Content="{Binding FirstComputation.GrandTotal,Converter={StaticResource CurrencyDisplayConverter}}" Foreground="Red" FontWeight="Bold"/>
     </Grid>
 </UserControl>

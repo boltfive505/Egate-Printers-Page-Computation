@@ -11,7 +11,9 @@ using Egate_Printers_Page_Computation.Objects.Tutorials;
 using Egate_Printers_Page_Computation.Objects.Calendar;
 using Egate_Printers_Page_Computation.Helpers;
 using Egate_Printers_Page_Computation.SubModals.Tutorials;
-using CustomControls.Modal;
+using bolt5.ModalWpf;
+using bolt5.CloneCopy;
+using bolt5.CustomMonthlyCalendar;
 
 namespace Egate_Printers_Page_Computation.Pages
 {
@@ -87,9 +89,9 @@ namespace Egate_Printers_Page_Computation.Pages
             periodView.Refresh();
         }
 
-        private void calendar_DayClick(object sender, CustomMonthlyCalendar.DayClickEventArgs e)
+        private void calendar_DayClick(object sender, DayClickEventArgs e)
         {
-            var btn = e.OriginalSource as CustomMonthlyCalendar.MonthlyCalendarDayButton;
+            var btn = e.OriginalSource as MonthlyCalendarDayButton;
             if (btn.DataContext != null)
             {
                 schedulePopup.DataContext = btn.DataContext;

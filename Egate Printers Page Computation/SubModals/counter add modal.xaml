@@ -4,13 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Egate_Printers_Page_Computation.SubModals"
-             xmlns:customs="clr-namespace:CustomControls;assembly=CustomControls"
+             xmlns:customs="clr-namespace:bolt5.CustomControls;assembly=bolt5.CustomControls.Wpf"
              xmlns:templates="clr-namespace:Egate_Printers_Page_Computation.Templates"
              xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <Style TargetType="{x:Type templates:BorderedContent}" BasedOn="{StaticResource {x:Type templates:BorderedContent}}">
+        <Style TargetType="{x:Type customs:BorderedContent}" >
             <Setter Property="Padding" Value="3"/>
             <Setter Property="Background" Value="White"/>
         </Style>
@@ -111,9 +111,9 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <templates:BorderedContent Grid.ColumnSpan="5" FontWeight="Bold" Background="WhiteSmoke">
-                    <templates:BorderedContent.Style>
-                        <Style TargetType="{x:Type templates:BorderedContent}" BasedOn="{StaticResource {x:Type templates:BorderedContent}}">
+                <customs:BorderedContent Grid.ColumnSpan="5" FontWeight="Bold" Background="WhiteSmoke">
+                    <customs:BorderedContent.Style>
+                        <Style TargetType="{x:Type customs:BorderedContent}" >
                             <Setter Property="Content" Value="Page Count"/>
                             <Style.Triggers>
                                 <MultiDataTrigger>
@@ -125,15 +125,15 @@
                                 </MultiDataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </templates:BorderedContent.Style>
-                </templates:BorderedContent>
-                <templates:BorderedContent Grid.Row="1" Grid.RowSpan="2" Content="Date" VerticalContentAlignment="Bottom"/>
-                <templates:BorderedContent Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Black"/>
-                <templates:BorderedContent Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Content="Colored"/>
-                <templates:BorderedContent Grid.Row="2" Grid.Column="1" Content="A4"/>
-                <templates:BorderedContent Grid.Row="2" Grid.Column="2" Content="A3"/>
-                <templates:BorderedContent Grid.Row="2" Grid.Column="3" Content="A4"/>
-                <templates:BorderedContent Grid.Row="2" Grid.Column="4" Content="A3"/>
+                    </customs:BorderedContent.Style>
+                </customs:BorderedContent>
+                <customs:BorderedContent Grid.Row="1" Grid.RowSpan="2" Content="Date" VerticalContentAlignment="Bottom"/>
+                <customs:BorderedContent Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Black"/>
+                <customs:BorderedContent Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Content="Colored"/>
+                <customs:BorderedContent Grid.Row="2" Grid.Column="1" Content="A4"/>
+                <customs:BorderedContent Grid.Row="2" Grid.Column="2" Content="A3"/>
+                <customs:BorderedContent Grid.Row="2" Grid.Column="3" Content="A4"/>
+                <customs:BorderedContent Grid.Row="2" Grid.Column="4" Content="A3"/>
                 <xceed:DateTimePicker x:Name="CounterDateValue" Grid.Row="3" Value="{Binding Date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" ValueChanged="CounterDate_ValueChanged"/>
                 <xceed:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding PageCount_Black_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
                 <xceed:IntegerUpDown Grid.Row="3" Grid.Column="2" Value="{Binding PageCount_Black_A3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
@@ -189,14 +189,14 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <templates:BorderedContent Grid.ColumnSpan="5" Content="Page Count ( New Unit )" FontWeight="Bold"/>
-                        <templates:BorderedContent Grid.Row="1" Grid.RowSpan="3"/>
-                        <templates:BorderedContent Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Black"/>
-                        <templates:BorderedContent Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Content="Colored"/>
-                        <templates:BorderedContent Grid.Row="2" Grid.Column="1" Content="A4"/>
-                        <templates:BorderedContent Grid.Row="2" Grid.Column="2" Content="A3"/>
-                        <templates:BorderedContent Grid.Row="2" Grid.Column="3" Content="A4"/>
-                        <templates:BorderedContent Grid.Row="2" Grid.Column="4" Content="A3"/>
+                        <customs:BorderedContent Grid.ColumnSpan="5" Content="Page Count ( New Unit )" FontWeight="Bold"/>
+                        <customs:BorderedContent Grid.Row="1" Grid.RowSpan="3"/>
+                        <customs:BorderedContent Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Black"/>
+                        <customs:BorderedContent Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Content="Colored"/>
+                        <customs:BorderedContent Grid.Row="2" Grid.Column="1" Content="A4"/>
+                        <customs:BorderedContent Grid.Row="2" Grid.Column="2" Content="A3"/>
+                        <customs:BorderedContent Grid.Row="2" Grid.Column="3" Content="A4"/>
+                        <customs:BorderedContent Grid.Row="2" Grid.Column="4" Content="A3"/>
                         <xceed:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding PageCount_Black_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
                         <xceed:IntegerUpDown Grid.Row="3" Grid.Column="2" Value="{Binding PageCount_Black_A3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
                         <xceed:IntegerUpDown Grid.Row="3" Grid.Column="3" Value="{Binding PageCount_Colored_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>

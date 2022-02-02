@@ -8,8 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using Egate_Printers_Page_Computation.Objects;
 using Egate_Printers_Page_Computation.Helpers;
-using CustomControls;
-using CustomControls.Modal;
+using bolt5.CustomControls;
+using bolt5.ModalWpf;
 
 namespace Egate_Printers_Page_Computation.SubModals
 {

@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
-                    xmlns:CustomMonthlyCalendar="clr-namespace:CustomMonthlyCalendar;assembly=CustomMonthlyCalendar">
+                    xmlns:CustomMonthlyCalendar="clr-namespace:bolt5.CustomMonthlyCalendar;assembly=bolt5.CustomMonthlyCalendar">
     <system:Double x:Key="CalendarDayButton.MinHeight">120</system:Double>
 
     <Style x:Key="TutorialCalendarStyle" TargetType="{x:Type CustomMonthlyCalendar:MonthlyCalendar}">

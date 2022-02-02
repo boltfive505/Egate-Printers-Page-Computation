@@ -8,7 +8,7 @@
       xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:linq="clr-namespace:System.Linq;assembly=System.Core"
       xmlns:helpers="clr-namespace:Egate_Printers_Page_Computation.Helpers"
-      xmlns:customs="clr-namespace:CustomControls;assembly=CustomControls"
+      xmlns:customs="clr-namespace:bolt5.CustomControls;assembly=bolt5.CustomControls.Wpf"
       xmlns:popups="clr-namespace:Egate_Printers_Page_Computation.Popups"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"

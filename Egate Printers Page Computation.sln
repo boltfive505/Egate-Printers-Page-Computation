@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintersPageComputation.Model", "PrintersPageComputation.Model\PrintersPageComputation.Model.csproj", "{07642ED7-A800-4B8E-9982-05F3D3256CCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Egate Printers Page Computation", "Egate Printers Page Computation\Egate Printers Page Computation.csproj", "{198CE4BB-1B0F-4AA8-840E-001063D48512}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollectionSchedule.Model", "CollectionSchedule.Model\CollectionSchedule.Model.csproj", "{8D49FFD0-58FA-4E22-A884-96C1AA9E21B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorials.Model", "Tutorials.Model\Tutorials.Model.csproj", "{0F5F3F9A-0674-4CC4-866D-3C13B1296C26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Egate Printers Page Computation", "Egate Printers Page Computation\Egate Printers Page Computation.csproj", "{198CE4BB-1B0F-4AA8-840E-001063D48512}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,12 +27,6 @@ Global
 		{07642ED7-A800-4B8E-9982-05F3D3256CCB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{07642ED7-A800-4B8E-9982-05F3D3256CCB}.Release|x86.ActiveCfg = Release|Any CPU
 		{07642ED7-A800-4B8E-9982-05F3D3256CCB}.Release|x86.Build.0 = Release|Any CPU
-		{198CE4BB-1B0F-4AA8-840E-001063D48512}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{198CE4BB-1B0F-4AA8-840E-001063D48512}.Debug|x86.ActiveCfg = Debug|x86
-		{198CE4BB-1B0F-4AA8-840E-001063D48512}.Debug|x86.Build.0 = Debug|x86
-		{198CE4BB-1B0F-4AA8-840E-001063D48512}.Release|Any CPU.ActiveCfg = Release|x86
-		{198CE4BB-1B0F-4AA8-840E-001063D48512}.Release|x86.ActiveCfg = Release|x86
-		{198CE4BB-1B0F-4AA8-840E-001063D48512}.Release|x86.Build.0 = Release|x86
 		{8D49FFD0-58FA-4E22-A884-96C1AA9E21B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8D49FFD0-58FA-4E22-A884-96C1AA9E21B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D49FFD0-58FA-4E22-A884-96C1AA9E21B2}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -49,6 +43,12 @@ Global
 		{0F5F3F9A-0674-4CC4-866D-3C13B1296C26}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0F5F3F9A-0674-4CC4-866D-3C13B1296C26}.Release|x86.ActiveCfg = Release|Any CPU
 		{0F5F3F9A-0674-4CC4-866D-3C13B1296C26}.Release|x86.Build.0 = Release|Any CPU
+		{198CE4BB-1B0F-4AA8-840E-001063D48512}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{198CE4BB-1B0F-4AA8-840E-001063D48512}.Debug|x86.ActiveCfg = Debug|x86
+		{198CE4BB-1B0F-4AA8-840E-001063D48512}.Debug|x86.Build.0 = Debug|x86
+		{198CE4BB-1B0F-4AA8-840E-001063D48512}.Release|Any CPU.ActiveCfg = Release|x86
+		{198CE4BB-1B0F-4AA8-840E-001063D48512}.Release|x86.ActiveCfg = Release|x86
+		{198CE4BB-1B0F-4AA8-840E-001063D48512}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

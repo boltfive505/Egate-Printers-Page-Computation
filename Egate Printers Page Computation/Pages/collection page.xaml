@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Egate_Printers_Page_Computation.Pages"
       xmlns:me="clr-namespace:Egate_Printers_Page_Computation"
       xmlns:helpers="clr-namespace:Egate_Printers_Page_Computation.Helpers"
-      xmlns:customs="clr-namespace:CustomControls;assembly=CustomControls"
+      xmlns:customs="clr-namespace:bolt5.CustomControls;assembly=bolt5.CustomControls.Wpf"
       xmlns:popups="clr-namespace:Egate_Printers_Page_Computation.Popups"
       xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
       mc:Ignorable="d" 

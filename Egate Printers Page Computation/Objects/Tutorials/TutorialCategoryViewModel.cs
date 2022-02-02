@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tutorials.Model;
+using bolt5.CloneCopy;
 
 namespace Egate_Printers_Page_Computation.Objects.Tutorials
 {

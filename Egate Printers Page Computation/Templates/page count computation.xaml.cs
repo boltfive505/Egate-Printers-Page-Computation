@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using Egate_Printers_Page_Computation.Helpers;
 using Egate_Printers_Page_Computation.Objects;
+using bolt5.CloneCopy;
 
 namespace Egate_Printers_Page_Computation.Templates
 {

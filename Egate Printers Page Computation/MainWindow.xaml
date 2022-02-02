@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Egate_Printers_Page_Computation"
-        xmlns:modal="clr-namespace:CustomControls.Modal;assembly=CustomControls"
+        xmlns:modal="clr-namespace:bolt5.ModalWpf;assembly=bolt5.ModalWpf"
         xmlns:pages="clr-namespace:Egate_Printers_Page_Computation.Pages"
         mc:Ignorable="d"
         Title="Printers Page Computation" Height="450" Width="800"
@@ -79,6 +79,6 @@
             </TabItem>
         </TabControl>
 
-        <modal:ModalForm/>
+        <modal:ModalForm Visibility="Hidden"/>
     </Grid>
 </Window>

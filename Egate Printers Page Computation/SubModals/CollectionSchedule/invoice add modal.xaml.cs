@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using CustomControls;
-using CustomControls.Modal;
+using bolt5.CustomControls;
+using bolt5.ModalWpf;
 
 namespace Egate_Printers_Page_Computation.SubModals.CollectionSchedule
 {

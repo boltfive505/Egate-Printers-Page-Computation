@@ -6,9 +6,8 @@
              xmlns:local="clr-namespace:Egate_Printers_Page_Computation.SubModals"
              xmlns:me="clr-namespace:Egate_Printers_Page_Computation"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
-             xmlns:customs="clr-namespace:CustomControls;assembly=CustomControls"
-             xmlns:templates="clr-namespace:Egate_Printers_Page_Computation.Templates"
-             xmlns:html="clr-namespace:CustomHtmlCefEditor.Wpf;assembly=CustomHtmlCefEditor.Wpf"
+             xmlns:customs="clr-namespace:bolt5.CustomControls;assembly=bolt5.CustomControls.Wpf"
+             xmlns:html="clr-namespace:bolt5.CustomHtmlCefEditor;assembly=bolt5.CustomHtmlCefEditor"
              xmlns:xceed="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
@@ -19,7 +18,7 @@
                 <x:Type TypeName="me:AssetType"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <Style TargetType="{x:Type templates:BorderedContent}" BasedOn="{StaticResource {x:Type templates:BorderedContent}}">
+        <Style TargetType="{x:Type customs:BorderedContent}" >
             <Setter Property="Padding" Value="5"/>
             <Setter Property="Background" Value="White"/>
         </Style>
@@ -73,14 +72,14 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <templates:BorderedContent Grid.ColumnSpan="5" Content="Basic Charges (Free Print Pages)" FontWeight="Bold" Background="WhiteSmoke"/>
-                    <templates:BorderedContent Grid.Row="1" Grid.ColumnSpan="2" Content="Black" />
-                    <templates:BorderedContent Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Content="Colored" />
-                    <templates:BorderedContent Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Content="Basic Charge" VerticalContentAlignment="Bottom" />
-                    <templates:BorderedContent Grid.Row="2" Grid.Column="0" Content="A4"/>
-                    <templates:BorderedContent Grid.Row="2" Grid.Column="1" Content="A3"/>
-                    <templates:BorderedContent Grid.Row="2" Grid.Column="2" Content="A4"/>
-                    <templates:BorderedContent Grid.Row="2" Grid.Column="3" Content="A3"/>
+                    <customs:BorderedContent Grid.ColumnSpan="5" Content="Basic Charges (Free Print Pages)" FontWeight="Bold" Background="WhiteSmoke"/>
+                    <customs:BorderedContent Grid.Row="1" Grid.ColumnSpan="2" Content="Black" />
+                    <customs:BorderedContent Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Content="Colored" />
+                    <customs:BorderedContent Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Content="Basic Charge" VerticalContentAlignment="Bottom" />
+                    <customs:BorderedContent Grid.Row="2" Grid.Column="0" Content="A4"/>
+                    <customs:BorderedContent Grid.Row="2" Grid.Column="1" Content="A3"/>
+                    <customs:BorderedContent Grid.Row="2" Grid.Column="2" Content="A4"/>
+                    <customs:BorderedContent Grid.Row="2" Grid.Column="3" Content="A3"/>
                     <xceed:IntegerUpDown Grid.Row="3" Grid.Column="0" Value="{Binding PageLimit_Black_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeIntegerDisplay}"/>
                     <xceed:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding PageLimit_Black_A3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeIntegerDisplay}"/>
                     <xceed:IntegerUpDown Grid.Row="3" Grid.Column="2" Value="{Binding PageLimit_Colored_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeIntegerDisplay}"/>
@@ -103,14 +102,14 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <templates:BorderedContent Grid.ColumnSpan="5" Content="Excess Charges" FontWeight="Bold" Background="WhiteSmoke"/>
-                    <templates:BorderedContent Grid.Row="1" Grid.RowSpan="3" Content="Charge / Page" VerticalContentAlignment="Bottom"/>
-                    <templates:BorderedContent Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Black"/>
-                    <templates:BorderedContent Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Content="Colored"/>
-                    <templates:BorderedContent Grid.Row="2" Grid.Column="1" Content="A4"/>
-                    <templates:BorderedContent Grid.Row="2" Grid.Column="2" Content="A3"/>
-                    <templates:BorderedContent Grid.Row="2" Grid.Column="3" Content="A4"/>
-                    <templates:BorderedContent Grid.Row="2" Grid.Column="4" Content="A3"/>
+                    <customs:BorderedContent Grid.ColumnSpan="5" Content="Excess Charges" FontWeight="Bold" Background="WhiteSmoke"/>
+                    <customs:BorderedContent Grid.Row="1" Grid.RowSpan="3" Content="Charge / Page" VerticalContentAlignment="Bottom"/>
+                    <customs:BorderedContent Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Black"/>
+                    <customs:BorderedContent Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Content="Colored"/>
+                    <customs:BorderedContent Grid.Row="2" Grid.Column="1" Content="A4"/>
+                    <customs:BorderedContent Grid.Row="2" Grid.Column="2" Content="A3"/>
+                    <customs:BorderedContent Grid.Row="2" Grid.Column="3" Content="A4"/>
+                    <customs:BorderedContent Grid.Row="2" Grid.Column="4" Content="A3"/>
                     <xceed:DecimalUpDown Grid.Row="3" Grid.Column="1" Value="{Binding ExcessPrice_Black_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeDecimalDisplay}"/>
                     <xceed:DecimalUpDown Grid.Row="3" Grid.Column="2" Value="{Binding ExcessPrice_Black_A3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeDecimalDisplay}"/>
                     <xceed:DecimalUpDown Grid.Row="3" Grid.Column="3" Value="{Binding ExcessPrice_Colored_A4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ChargeDecimalDisplay}"/>

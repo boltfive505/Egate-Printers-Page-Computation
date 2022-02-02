@@ -10,7 +10,8 @@ using System.Windows.Data;
 using Egate_Printers_Page_Computation.Helpers;
 using Egate_Printers_Page_Computation.Objects.CollectionSchedule;
 using Egate_Printers_Page_Computation.SubModals.CollectionSchedule;
-using CustomControls.Modal;
+using bolt5.ModalWpf;
+using bolt5.CloneCopy;
 
 namespace Egate_Printers_Page_Computation.Pages
 {

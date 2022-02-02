@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using CustomControls.Modal;
+using bolt5.ModalWpf;
 using Egate_Printers_Page_Computation.SubModals.CollectionSchedule;
 using Egate_Printers_Page_Computation.Objects.CollectionSchedule;
 using Egate_Printers_Page_Computation.Helpers;
 using System.Collections.ObjectModel;
+using bolt5.CloneCopy;
 
 namespace Egate_Printers_Page_Computation.Pages
 {

@@ -7,7 +7,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/FontIcons.FontAwesome;component/fontawesome.xaml"/>
+                <ResourceDictionary Source="/FontIcons.WPF.FontAwesome;component/FontAwesome.xaml"/>
                 <ResourceDictionary Source="/Styles/main styles.xaml"/>
                 <ResourceDictionary Source="/Styles/converters.xaml"/>
                 <ResourceDictionary Source="/Styles/tooltips.xaml"/>
@@ -16,8 +16,6 @@
                 <ResourceDictionary Source="/Styles/checkbox styles.xaml"/>
                 <ResourceDictionary Source="/Styles/PlusMinusExpander.xaml"/>
                 <ResourceDictionary Source="/Styles/TutorialCalendarStyle.xaml"/>
-                <!-- template styles -->
-                <ResourceDictionary Source="/Templates/Styles/BorderedContent.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <ObjectDataProvider x:Key="ScheduleNotesTypeData" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
